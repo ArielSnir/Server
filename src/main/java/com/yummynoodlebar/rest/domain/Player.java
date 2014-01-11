@@ -24,75 +24,89 @@ import com.yummynoodlebar.rest.controller.PlayerQueriesController;
 @XmlRootElement
 // {!begin resourceSupport}
 public class Player extends ResourceSupport implements Serializable {
-// {!end resourceSupport}
+	// {!end resourceSupport}
 
-  private Date dateTimeOfSubmission;
+	private String name;
 
-  private Map<String, Integer> items;
+	private Date dateTimeOfSubmission;
 
-  private UUID key;
+	private Map<String, Integer> items;
 
-  public Date getDateTimeOfSubmission() {
-    return dateTimeOfSubmission;
-  }
+	private UUID key;
 
-  public UUID getKey() {
-    return key;
-  }
+	public Date getDateTimeOfSubmission() {
+		return dateTimeOfSubmission;
+	}
 
-  public Map<String, Integer> getItems() {
-    return items;
-  }
+	public UUID getKey() {
+		return key;
+	}
 
-  public void setItems(Map<String, Integer> items) {
-    if (items == null) {
-      this.items = Collections.emptyMap();
-    } else {
-      this.items = Collections.unmodifiableMap(items);
-    }
-  }
+	public Map<String, Integer> getItems() {
+		return items;
+	}
 
-  public void setDateTimeOfSubmission(Date dateTimeOfSubmission) {
-    this.dateTimeOfSubmission = dateTimeOfSubmission;
-  }
+	public void setItems(Map<String, Integer> items) {
+		if (items == null) {
+			this.items = Collections.emptyMap();
+		} else {
+			this.items = Collections.unmodifiableMap(items);
+		}
+	}
 
-  public void setKey(UUID key) {
-    this.key = key;
-  }
+	public void setDateTimeOfSubmission(Date dateTimeOfSubmission) {
+		this.dateTimeOfSubmission = dateTimeOfSubmission;
+	}
 
-  public PlayerDetails toPlayerDetails() {
-    PlayerDetails details = new PlayerDetails();
+	public void setKey(UUID key) {
+		this.key = key;
+	}
 
-    details.setPlayerItems(items);
-    details.setKey(key);
-    details.setDateTimeOfSubmission(dateTimeOfSubmission);
+	public PlayerDetails toPlayerDetails() {
+		PlayerDetails details = new PlayerDetails();
+		
+		details.setName(name);
+		details.setPlayerItems(items);
+		details.setKey(key);
+		details.setDateTimeOfSubmission(dateTimeOfSubmission);
 
-    return details;
-  }
+		return details;
+	}
 
-  // {!begin fromPlayerDetails}
-  public static Player fromPlayerDetails(PlayerDetails playerDetails) {
-    Player player = new Player();
+	public String getName() {
+		return name;
+	}
 
-    player.dateTimeOfSubmission = playerDetails.getDateTimeOfSubmission();
-    player.key = playerDetails.getKey();
-    player.setItems(playerDetails.getPlayerItems());
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    //TODOCUMENT.  Adding the library, the above extends ResourceSupport and
-    //this section is all that is actually needed in our model to add hateoas support.
 
-    
-    //Much of the rest of the framework is helping deal with the blending of domains that happens in many spring apps
-    //We have explicitly avoided that.
-    // {!begin selfRel}
-    player.add(linkTo(PlayerQueriesController.class).slash(player.key).withSelfRel());
-    // {!end selfRel}
-    // {!begin status}
-    player.add(linkTo(PlayerQueriesController.class).slash(player.key).slash("status").withRel("Player Status"));
-    // {!end status}
-    player.add(linkTo(PlayerQueriesController.class).slash(player.key).slash("paymentdetails").withRel("Payment Details"));
 
-    return player;
-  }
-  // {!end fromPlayerDetails}
+	// {!begin fromPlayerDetails}
+	public static Player fromPlayerDetails(PlayerDetails playerDetails) {
+		Player player = new Player();
+
+		player.name = playerDetails.getName();
+		player.dateTimeOfSubmission = playerDetails.getDateTimeOfSubmission();
+		player.key = playerDetails.getKey();
+		player.setItems(playerDetails.getPlayerItems());
+
+		//TODOCUMENT.  Adding the library, the above extends ResourceSupport and
+		//this section is all that is actually needed in our model to add hateoas support.
+
+
+		//Much of the rest of the framework is helping deal with the blending of domains that happens in many spring apps
+		//We have explicitly avoided that.
+		// {!begin selfRel}
+		player.add(linkTo(PlayerQueriesController.class).slash(player.key).withSelfRel());
+		// {!end selfRel}
+		// {!begin status}
+		player.add(linkTo(PlayerQueriesController.class).slash(player.key).slash("status").withRel("Player Status"));
+		// {!end status}
+		player.add(linkTo(PlayerQueriesController.class).slash(player.key).slash("paymentdetails").withRel("Payment Details"));
+
+		return player;
+	}
+	// {!end fromPlayerDetails}
 }

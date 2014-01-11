@@ -11,98 +11,123 @@ import org.springframework.beans.BeanUtils;
 import com.yummynoodlebar.events.orders.PlayerDetails;
 
 public class Player {
+	private String name;
 
-  private final Date dateTimeOfSubmission;
-  private List<MenuItem> menuItems;
-  private final UUID key;
-  private Customer customer;
-  
-  private PlayerStatus status;
-  private List<PlayerStatus> statusHistory;
 
-  private Date expectedCompletionTime;
-  private BigDecimal totalCost;
+	private final Date dateTimeOfSubmission;
+	private List<MenuItem> menuItems;
+	private final UUID key;
+	private Customer customer;
 
-  //currently 5 minutes
-  private final static long ACCEPT_CANCEL_TIME = 1000 * 60 * 5;
+	private PlayerStatus status;
+	private List<PlayerStatus> statusHistory;
 
-  public Player(final Date dateTimeOfSubmission) {
-    this.key = UUID.randomUUID();
-    this.dateTimeOfSubmission = dateTimeOfSubmission;
-    statusHistory = new ArrayList<PlayerStatus>();
-  }
+	private Date expectedCompletionTime;
+	private BigDecimal totalCost;
 
-  public Player(final UUID key,final Date dateTimeOfSubmission) {
-    this.key = key;
-    this.dateTimeOfSubmission = dateTimeOfSubmission;
-    statusHistory = new ArrayList<PlayerStatus>();
-  }
+	//currently 5 minutes
+	private final static long ACCEPT_CANCEL_TIME = 1000 * 60 * 5;
 
-  public Date getExpectedCompletionTime() {
-    return expectedCompletionTime;
-  }
+	public Player(final Date dateTimeOfSubmission) {
+		this.key = UUID.randomUUID();
+		this.dateTimeOfSubmission = dateTimeOfSubmission;
+		statusHistory = new ArrayList<PlayerStatus>();
+	}
 
-  public void setExpectedCompletionTime(Date expectedCompletionTime) {
-    this.expectedCompletionTime = expectedCompletionTime;
-  }
+	public Player(final String name,final Date dateTimeOfSubmission) {
+		this.name = name;
+		this.key = UUID.randomUUID();
+		this.dateTimeOfSubmission = dateTimeOfSubmission;
+		statusHistory = new ArrayList<PlayerStatus>();
+	}
 
-  public BigDecimal getTotalCost() {
-    return totalCost;
-  }
+	public Player(final UUID key,final Date dateTimeOfSubmission) {
+		this.key = key;
+		this.dateTimeOfSubmission = dateTimeOfSubmission;
+		statusHistory = new ArrayList<PlayerStatus>();
+	}
 
-  public void setTotalCost(BigDecimal totalCost) {
-    this.totalCost = totalCost;
-  }
+	public Player(final UUID key,final String name,final Date dateTimeOfSubmission) {
+		this.key = key;
+		this.name = name;
+		this.dateTimeOfSubmission = dateTimeOfSubmission;
+		statusHistory = new ArrayList<PlayerStatus>();
+	}
+	
+	public Date getExpectedCompletionTime() {
+		return expectedCompletionTime;
+	}
 
-  public void addStatus(PlayerStatus newStatus) {
-    statusHistory.add(newStatus);
-    status = newStatus;
-  }
+	public void setExpectedCompletionTime(Date expectedCompletionTime) {
+		this.expectedCompletionTime = expectedCompletionTime;
+	}
 
-  public PlayerStatus getStatus() {
-    return status;
-  }
+	public BigDecimal getTotalCost() {
+		return totalCost;
+	}
 
-  public Date getDateTimeOfSubmission() {
-    return dateTimeOfSubmission;
-  }
+	public void setTotalCost(BigDecimal totalCost) {
+		this.totalCost = totalCost;
+	}
 
-  public UUID getKey() {
-    return key;
-  }
+	public void addStatus(PlayerStatus newStatus) {
+		statusHistory.add(newStatus);
+		status = newStatus;
+	}
 
-  public List<MenuItem> getMenuItems() {
-    return menuItems;
-  }
+	public PlayerStatus getStatus() {
+		return status;
+	}
 
-  public void setMenuItems(List<MenuItem> menuItems) {
-    this.menuItems = menuItems;
-  }
+	public Date getDateTimeOfSubmission() {
+		return dateTimeOfSubmission;
+	}
 
-  public boolean canBeDeleted() {
-    //accept cancellation if within 5 minutes of placing.
-    return System.currentTimeMillis() - dateTimeOfSubmission.getTime() < ACCEPT_CANCEL_TIME;
-  }
+	public UUID getKey() {
+		return key;
+	}
 
-  public Player withMenuItems(List<MenuItem> menuItems) {
-    this.menuItems = menuItems;
-    return this;
-  }
+	public List<MenuItem> getMenuItems() {
+		return menuItems;
+	}
 
-  public PlayerDetails toPlayerDetails() {
-    PlayerDetails details = new PlayerDetails();
+	public void setMenuItems(List<MenuItem> menuItems) {
+		this.menuItems = menuItems;
+	}
 
-    details.setDateTimeOfSubmission(getDateTimeOfSubmission());
-    details.setKey(getKey());
+	public boolean canBeDeleted() {
+		//accept cancellation if within 5 minutes of placing.
+		return System.currentTimeMillis() - dateTimeOfSubmission.getTime() < ACCEPT_CANCEL_TIME;
+	}
 
-    return details;
-  }
+	public Player withMenuItems(List<MenuItem> menuItems) {
+		this.menuItems = menuItems;
+		return this;
+	}
 
-  public static Player fromPlayerDetails(PlayerDetails playerDetails) {
-    Player player = new Player(playerDetails.getKey(),playerDetails.getDateTimeOfSubmission());
+	public PlayerDetails toPlayerDetails() {
+		PlayerDetails details = new PlayerDetails();
 
-    BeanUtils.copyProperties(playerDetails, player);
+		details.setName(getName());
+		details.setDateTimeOfSubmission(getDateTimeOfSubmission());
+		details.setKey(getKey());
 
-    return player;
-  }
+		return details;
+	}
+
+	public static Player fromPlayerDetails(PlayerDetails playerDetails) {
+		Player player = new Player(playerDetails.getKey(),playerDetails.getName(),playerDetails.getDateTimeOfSubmission());
+
+		BeanUtils.copyProperties(playerDetails, player);
+
+		return player;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

@@ -10,81 +10,94 @@ import java.util.UUID;
 
 @Entity(name = "NOODLE_PLAYERS")
 public class Player {
+	private String name;
 
-  @Column(name = "SUBMISSION_DATETIME")
-  private Date dateTimeOfSubmission;
 
-  @ElementCollection(fetch = FetchType.EAGER, targetClass = java.lang.Integer.class)
-  @JoinTable(name="PLAYER_PLAYER_ITEMS", joinColumns=@JoinColumn(name="ID"))
-  @MapKeyColumn(name="MENU_ID")
-  @Column(name="VALUE")
-  private Map<String, Integer> playerItems;
 
-  @Transient
-  private PlayerStatus playerStatus;
+	@Column(name = "SUBMISSION_DATETIME")
+	private Date dateTimeOfSubmission;
 
-  @Id
-  @Column(name = "PLAYER_ID")
-  private String id;
+	@ElementCollection(fetch = FetchType.EAGER, targetClass = java.lang.Integer.class)
+	@JoinTable(name="PLAYER_PLAYER_ITEMS", joinColumns=@JoinColumn(name="ID"))
+	@MapKeyColumn(name="MENU_ID")
+	@Column(name="VALUE")
+	private Map<String, Integer> playerItems;
 
-  public void setId(String id) {
-    this.id = id;
-  }
+	@Transient
+	private PlayerStatus playerStatus;
 
-  public void setDateTimeOfSubmission(Date dateTimeOfSubmission) {
-    this.dateTimeOfSubmission = dateTimeOfSubmission;
-  }
+	@Id
+	@Column(name = "PLAYER_ID")
+	private String id;
 
-  public PlayerStatus getStatus() {
-    return playerStatus;
-  }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-  public void setStatus(PlayerStatus playerStatus) {
-    this.playerStatus = playerStatus;
-  }
+	public void setDateTimeOfSubmission(Date dateTimeOfSubmission) {
+		this.dateTimeOfSubmission = dateTimeOfSubmission;
+	}
 
-  public Date getDateTimeOfSubmission() {
-    return dateTimeOfSubmission;
-  }
+	public PlayerStatus getStatus() {
+		return playerStatus;
+	}
 
-  public String getId() {
-    return id;
-  }
+	public void setStatus(PlayerStatus playerStatus) {
+		this.playerStatus = playerStatus;
+	}
 
-  public void setPlayerItems(Map<String, Integer> playerItems) {
-    if (playerItems == null) {
-      this.playerItems = Collections.emptyMap();
-    } else {
-      this.playerItems = Collections.unmodifiableMap(playerItems);
-    }
-  }
+	public Date getDateTimeOfSubmission() {
+		return dateTimeOfSubmission;
+	}
 
-  public Map<String, Integer> getPlayerItems() {
-    return playerItems;
-  }
+	public String getId() {
+		return id;
+	}
 
-  public PlayerDetails toPlayerDetails() {
-    PlayerDetails details = new PlayerDetails();
+	public void setPlayerItems(Map<String, Integer> playerItems) {
+		if (playerItems == null) {
+			this.playerItems = Collections.emptyMap();
+		} else {
+			this.playerItems = Collections.unmodifiableMap(playerItems);
+		}
+	}
 
-    details.setKey(UUID.fromString(this.id));
-    details.setDateTimeOfSubmission(this.dateTimeOfSubmission);
-    details.setPlayerItems(this.getPlayerItems());
+	public Map<String, Integer> getPlayerItems() {
+		return playerItems;
+	}
 
-    return details;
-  }
+	public PlayerDetails toPlayerDetails() {
+		PlayerDetails details = new PlayerDetails();
+		details.setName(this.name);
+		details.setKey(UUID.fromString(this.id));
+		details.setDateTimeOfSubmission(this.dateTimeOfSubmission);
+		details.setPlayerItems(this.getPlayerItems());
 
-  public static Player fromPlayerDetails(PlayerDetails playerDetails) {
-    Player player = new Player();
+		return details;
+	}
 
-    player.id = (playerDetails.getKey()!=null) ? playerDetails.getKey().toString() : null;
-    player.dateTimeOfSubmission = playerDetails.getDateTimeOfSubmission();
-    player.playerItems = playerDetails.getPlayerItems();
+	public static Player fromPlayerDetails(PlayerDetails playerDetails) {
+		Player player = new Player();
 
-    return player;
-  }
+		player.name = (playerDetails.getName()!=null) ? playerDetails.getName().toString() : null;
+		player.id = (playerDetails.getKey()!=null) ? playerDetails.getKey().toString() : null;
+		player.dateTimeOfSubmission = playerDetails.getDateTimeOfSubmission();
+		player.playerItems = playerDetails.getPlayerItems();
 
-public UUID getKey() {
-	// TODO Auto-generated method stub
-	return UUID.fromString(this.id);
-}
+		return player;
+	}
+
+	public UUID getKey() {
+		// TODO Auto-generated method stub
+		return UUID.fromString(this.id);
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }
