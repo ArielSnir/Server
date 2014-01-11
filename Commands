@@ -1,0 +1,9 @@
+Prepare environment prior trying to run on tomcat server:
+
+cmd C:\Users\Ariel.Noa-PC\test2\tut-web\6\Server
+C:\Users\Ariel.Noa-PC\test2\tut-web\6\Server>gradlew tomcatRunWar
+C:\Users\Ariel.Noa-PC\test2\tut-web\6\Server>gradle
+
+Refresh (F5) on the development environment after starting and stooping server through gradlew
+
+Run on Tomcat server

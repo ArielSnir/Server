@@ -1,0 +1,19 @@
+Add Player Class - all the way from DB to GUI
+Add Coach Class - all the way from DB to GUI
+Add Coach Team - all the way from DB to GUI
+Add any missing "relationships" (members variables)
+Add API to get clip data
+
+
+Deploy on Tomcat and Mongo DB on AppFog
+Add REST API to communicate with client?
+
+Add the existing sample client (with the video editor) to our server.
+
+
+Add ability to send email (Add SMTP Server - we can use GMAIL SMTP Server)
+Crop video to clip using clipInfo - originalFile, start, end
+Save Video on persistent storage i.e. Dropbox - either through API or to a local auto synchronized folder on the server machine.
+
+
+
