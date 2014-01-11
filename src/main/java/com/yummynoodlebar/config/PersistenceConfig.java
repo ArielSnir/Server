@@ -2,11 +2,15 @@ package com.yummynoodlebar.config;
 
 import com.yummynoodlebar.persistence.domain.MenuItem;
 import com.yummynoodlebar.persistence.domain.Order;
+import com.yummynoodlebar.persistence.domain.Player;
 import com.yummynoodlebar.persistence.repository.*;
 import com.yummynoodlebar.persistence.services.MenuPersistenceEventHandler;
 import com.yummynoodlebar.persistence.services.MenuPersistenceService;
 import com.yummynoodlebar.persistence.services.OrderPersistenceEventHandler;
 import com.yummynoodlebar.persistence.services.OrderPersistenceService;
+import com.yummynoodlebar.persistence.services.PlayerPersistenceEventHandler;
+import com.yummynoodlebar.persistence.services.PlayerPersistenceService;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,15 +26,31 @@ public class PersistenceConfig {
   public OrdersRepository orderRepository() {
     return new OrdersMemoryRepository(new HashMap<UUID, Order>());
   }
+  
+  @Bean
+  public PlayersRepository playerRepository() {
+    return new PlayersMemoryRepository(new HashMap<UUID, Player>());
+  }
+  
   @Bean
   public OrderStatusRepository orderStatusRepository() {
     return new OrderStatusMemoryRepository();
-  }
+  }  
+  
+  @Bean
+  public PlayerStatusRepository playerStatusRepository() {
+	    return new PlayerStatusMemoryRepository();
+	  }
   @Bean
   public OrderPersistenceService ordersPersistenceService() {
     return new OrderPersistenceEventHandler(orderRepository(), orderStatusRepository());
   }
 
+  @Bean
+  public PlayerPersistenceService playersPersistenceService() {
+    return new PlayerPersistenceEventHandler(playerRepository(), playerStatusRepository());
+  }
+  
 	@Bean
 	public MenuItemRepository menuItemRepository() {
 		return new MenuItemMemoryRepository(defaultMenu());
