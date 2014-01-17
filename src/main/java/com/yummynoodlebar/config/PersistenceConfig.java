@@ -26,6 +26,10 @@ import java.util.UUID;
 @ContextConfiguration(classes = {MongoConfiguration.class})
 public class PersistenceConfig {
 
+	
+	@Autowired
+	PlayersRepository playersRepository;
+	
 /*  @Autowired
   MenuItemRepository menuItemRepository;	
 
@@ -37,10 +41,10 @@ public class PersistenceConfig {
     return new OrdersMemoryRepository(new HashMap<UUID, Order>());
   }
   
-  @Bean
+/*  @Bean
   public PlayersRepository playerRepository() {
     return new PlayersMemoryRepository(new HashMap<UUID, Player>());
-  }
+  }*/
   
   @Bean
   public OrderStatusRepository orderStatusRepository() {
@@ -58,7 +62,7 @@ public class PersistenceConfig {
 
   @Bean
   public PlayerPersistenceService playersPersistenceService() {
-    return new PlayerPersistenceEventHandler(playerRepository(), playerStatusRepository());
+    return new PlayerPersistenceEventHandler(playersRepository, playerStatusRepository());
   }
   
 	@Bean

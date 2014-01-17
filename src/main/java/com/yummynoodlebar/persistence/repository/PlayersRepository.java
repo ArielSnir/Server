@@ -4,13 +4,15 @@ import com.yummynoodlebar.persistence.domain.Player;
 
 import java.util.UUID;
 
-public interface PlayersRepository {
+import org.springframework.data.repository.CrudRepository;
 
-  Player save(Player player);
+public interface PlayersRepository extends CrudRepository<Player, String> {
+
+/*  Player save(Player player);
 
   void delete(UUID key);
 
   Player findById(UUID key);
 
-  Iterable<Player> findAll();
+  Iterable<Player> findAll();*/
 }

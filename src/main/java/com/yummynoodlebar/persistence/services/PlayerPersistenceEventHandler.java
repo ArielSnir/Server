@@ -52,7 +52,10 @@ public class PlayerPersistenceEventHandler implements PlayerPersistenceService {
   @Override
   public PlayerDetailsEvent requestPlayerDetails(RequestPlayerDetailsEvent requestPlayerDetailsEvent) {
 
-    Player player = playerRepository.findById(requestPlayerDetailsEvent.getKey());
+    //Player player = playerRepository.findById(requestPlayerDetailsEvent.getKey());
+	  
+	  //TODO: consider replace the using of UUID with something else for example string.
+	  Player player = playerRepository.findOne(requestPlayerDetailsEvent.getKey().toString());
 
     if (player == null) {
       return PlayerDetailsEvent.notFound(requestPlayerDetailsEvent.getKey());
@@ -65,7 +68,8 @@ public class PlayerPersistenceEventHandler implements PlayerPersistenceService {
 
   @Override
   public PlayerUpdatedEvent setPlayerPayment(SetPlayerPaymentEvent setPlayerPaymentEvent) {
-    Player player = playerRepository.findById(setPlayerPaymentEvent.getKey());
+    //Player player = playerRepository.findById(setPlayerPaymentEvent.getKey());
+	  Player player = playerRepository.findOne(setPlayerPaymentEvent.getKey().toString());
 
     if(player == null) {
       return PlayerUpdatedEvent.notFound(setPlayerPaymentEvent.getKey());
@@ -79,13 +83,15 @@ public class PlayerPersistenceEventHandler implements PlayerPersistenceService {
   @Override
   public PlayerDeletedEvent deletePlayer(DeletePlayerEvent deletePlayerEvent) {
 
-    Player player = playerRepository.findById(deletePlayerEvent.getKey());
+    //Player player = playerRepository.findById(deletePlayerEvent.getKey());
+	  Player player = playerRepository.findOne(deletePlayerEvent.getKey().toString());
 
     if (player == null) {
       return PlayerDeletedEvent.notFound(deletePlayerEvent.getKey());
     }
 
-    playerRepository.delete(deletePlayerEvent.getKey());
+    //playerRepository.delete(deletePlayerEvent.getKey());
+    playerRepository.delete(deletePlayerEvent.getKey().toString());
 
     return new PlayerDeletedEvent(deletePlayerEvent.getKey(), player.toPlayerDetails());
   }
