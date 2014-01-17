@@ -15,10 +15,11 @@ import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 import com.yummynoodlebar.persistence.repository.MenuItemRepository;
 import com.yummynoodlebar.persistence.repository.PlayersRepository;
+import com.yummynoodlebar.persistence.repository.TeamsRepository;
 
 @Configuration
 @EnableMongoRepositories(basePackages = "com.yummynoodlebar.persistence.repository",
-      includeFilters = @ComponentScan.Filter(value = {PlayersRepository.class,MenuItemRepository.class}, type = FilterType.ASSIGNABLE_TYPE))
+      includeFilters = @ComponentScan.Filter(value = {TeamsRepository.class,PlayersRepository.class,MenuItemRepository.class}, type = FilterType.ASSIGNABLE_TYPE))
 public class MongoConfiguration {
 
  /* public @Bean

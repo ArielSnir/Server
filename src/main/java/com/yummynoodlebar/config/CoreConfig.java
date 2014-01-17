@@ -9,12 +9,15 @@ import com.yummynoodlebar.core.services.OrderEventHandler;
 import com.yummynoodlebar.core.services.OrderService;
 import com.yummynoodlebar.core.services.PlayerEventHandler;
 import com.yummynoodlebar.core.services.PlayerService;
+import com.yummynoodlebar.core.services.TeamEventHandler;
+import com.yummynoodlebar.core.services.TeamService;
 import com.yummynoodlebar.persistence.domain.Order;
 import com.yummynoodlebar.persistence.repository.OrdersMemoryRepository;
 import com.yummynoodlebar.persistence.repository.OrdersRepository;
 import com.yummynoodlebar.persistence.services.MenuPersistenceService;
 import com.yummynoodlebar.persistence.services.OrderPersistenceService;
 import com.yummynoodlebar.persistence.services.PlayerPersistenceService;
+import com.yummynoodlebar.persistence.services.TeamPersistenceService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +36,11 @@ public class CoreConfig {
   @Bean
   public PlayerService playerService(PlayerPersistenceService playerPersistenceService) {
     return new PlayerEventHandler(playerPersistenceService);
+  }
+  
+  @Bean
+  public TeamService teamService(TeamPersistenceService teamPersistenceService) {
+    return new TeamEventHandler(teamPersistenceService);
   }
   
   @Bean

@@ -10,6 +10,8 @@ import com.yummynoodlebar.persistence.services.OrderPersistenceEventHandler;
 import com.yummynoodlebar.persistence.services.OrderPersistenceService;
 import com.yummynoodlebar.persistence.services.PlayerPersistenceEventHandler;
 import com.yummynoodlebar.persistence.services.PlayerPersistenceService;
+import com.yummynoodlebar.persistence.services.TeamPersistenceEventHandler;
+import com.yummynoodlebar.persistence.services.TeamPersistenceService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +31,9 @@ public class PersistenceConfig {
 	
 	@Autowired
 	PlayersRepository playersRepository;
+	
+	@Autowired
+	TeamsRepository teamsRepository;
 	
 /*  @Autowired
   MenuItemRepository menuItemRepository;	
@@ -65,6 +70,16 @@ public class PersistenceConfig {
     return new PlayerPersistenceEventHandler(playersRepository, playerStatusRepository());
   }
   
+  @Bean
+  public TeamStatusRepository teamStatusRepository() {
+	    return new TeamStatusMemoryRepository();
+	  }
+  
+  @Bean
+  public TeamPersistenceService teamsPersistenceService() {
+    return new TeamPersistenceEventHandler(teamsRepository, teamStatusRepository());
+  }
+
 	@Bean
 	public MenuItemRepository menuItemRepository() {
 		return new MenuItemMemoryRepository(defaultMenu());

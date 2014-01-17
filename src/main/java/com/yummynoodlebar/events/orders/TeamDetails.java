@@ -5,11 +5,11 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerDetails {
+public class TeamDetails {
 
   private UUID key;
   private Date dateTimeOfSubmission;
-  private Map<String, Integer> playerItems;
+  private Map<String, Integer> teamItems;
   
   private String name;
   private String address1;
@@ -18,11 +18,11 @@ public class PlayerDetails {
   private String userName;
   
 
-  public PlayerDetails() {
+  public TeamDetails() {
     key = null;
   }
 
-  public PlayerDetails(UUID key) {
+  public TeamDetails(UUID key) {
     this.key = key;
   }
 
@@ -34,15 +34,15 @@ public class PlayerDetails {
     this.dateTimeOfSubmission = dateTimeOfSubmission;
   }
 
-  public Map<String, Integer> getPlayerItems() {
-    return playerItems;
+  public Map<String, Integer> getTeamItems() {
+    return teamItems;
   }
 
-  public void setPlayerItems(Map<String, Integer> playerItems) {
-    if (playerItems == null) {
-      this.playerItems = Collections.emptyMap();
+  public void setTeamItems(Map<String, Integer> teamItems) {
+    if (teamItems == null) {
+      this.teamItems = Collections.emptyMap();
     } else {
-      this.playerItems = Collections.unmodifiableMap(playerItems);
+      this.teamItems = Collections.unmodifiableMap(teamItems);
     }
   }
   
