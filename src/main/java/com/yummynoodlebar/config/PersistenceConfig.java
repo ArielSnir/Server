@@ -11,8 +11,11 @@ import com.yummynoodlebar.persistence.services.OrderPersistenceService;
 import com.yummynoodlebar.persistence.services.PlayerPersistenceEventHandler;
 import com.yummynoodlebar.persistence.services.PlayerPersistenceService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -20,8 +23,15 @@ import java.util.Map;
 import java.util.UUID;
 
 @Configuration
+@ContextConfiguration(classes = {MongoConfiguration.class})
 public class PersistenceConfig {
 
+/*  @Autowired
+  MenuItemRepository menuItemRepository;	
+
+  @Autowired
+  MongoOperations mongo;*/
+  
   @Bean
   public OrdersRepository orderRepository() {
     return new OrdersMemoryRepository(new HashMap<UUID, Order>());
@@ -54,6 +64,9 @@ public class PersistenceConfig {
 	@Bean
 	public MenuItemRepository menuItemRepository() {
 		return new MenuItemMemoryRepository(defaultMenu());
+		//return new MenuItemRepositoryImpl();
+		//menuItemRepository.save(menuItem("YM1", new BigDecimal("1.99"), 11, "Yummy Noodles"));
+		//return menuItemRepository;
 	}
 
 	@Bean

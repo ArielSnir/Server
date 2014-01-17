@@ -13,11 +13,9 @@ public interface MenuItemRepository extends CrudRepository<MenuItem, String>, An
 	MenuItem findById(String key);
 
 
-  /*MenuItem save(MenuItem item);
+//  MenuItem save(MenuItem item);
 
   void delete(String key);
 
-  MenuItem findById(String key);
-
-  Iterable<MenuItem> findAll();*/
+  Iterable<MenuItem> findAll();
 }
