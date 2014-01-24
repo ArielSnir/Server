@@ -1,7 +1,9 @@
 package com.yummynoodlebar.persistence.domain.fixture;
 
+import com.yummynoodlebar.persistence.domain.Player;
 import com.yummynoodlebar.persistence.domain.Ingredient;
 import com.yummynoodlebar.persistence.domain.MenuItem;
+import com.yummynoodlebar.persistence.domain.Team;
 import com.yummynoodlebar.persistence.domain.Order;
 import com.yummynoodlebar.persistence.domain.OrderStatus;
 
@@ -82,4 +84,27 @@ public class PersistenceFixture {
   public static OrderStatus finishedCooking(UUID orderId) {
     return new OrderStatus(orderId, UUID.randomUUID(), new Date(), "Finished Cooking");
   }
+  
+  
+  public static Team standardTeam() {
+	    Team team = new Team();
+	    //team.setDescription("Peanutty Noodles, perfect for every occasion.");
+	    team.setName("Yummy Noodles");
+	    //team.setCost(new BigDecimal("12.99"));
+	    team.setPlayers(new HashSet<Player>(
+	        Arrays.asList(
+	            new Player("Amikam Snir",new Date(),UUID.randomUUID()),
+	            new Player("Ariel Snir", new Date(),UUID.randomUUID()),
+	            new Player("Noa Snir", new Date(),UUID.randomUUID())
+	        )));
+
+	    Map<String, Integer> items = new HashMap<String, Integer>();
+
+	    items.put("yummy1", 15);
+	    items.put("yummy3", 12);
+	    items.put("yummy5", 7);
+	    team.setTeamItems(items);
+	    return team;
+	  }
+  
 }

@@ -1,11 +1,16 @@
 package com.yummynoodlebar.persistence.domain;
 
+import com.yummynoodlebar.persistence.domain.Player;
 import com.yummynoodlebar.events.orders.TeamDetails;
 
 import javax.persistence.*;
+
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity(name = "NOODLE_TEAMS")
@@ -22,6 +27,12 @@ public class Team {
 	@MapKeyColumn(name="MENU_ID")
 	@Column(name="VALUE")
 	private Map<String, Integer> teamItems;
+	
+	
+	
+//	  private List<Account> accounts;
+	@DBRef
+	private Set<Player> players;
 
 	@Transient
 	private TeamStatus teamStatus;
@@ -99,5 +110,12 @@ public class Team {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public Set<Player> getPlayers() {
+		return players;
+	}
 
+	public void setPlayers(Set<Player> players) {
+		this.players = players;
+	}
 }

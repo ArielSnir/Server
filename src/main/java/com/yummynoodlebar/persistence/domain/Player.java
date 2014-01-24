@@ -3,6 +3,7 @@ package com.yummynoodlebar.persistence.domain;
 import com.yummynoodlebar.events.orders.PlayerDetails;
 
 import javax.persistence.*;
+import org.springframework.data.annotation.Id;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
@@ -12,7 +13,12 @@ import java.util.UUID;
 public class Player {
 	private String name;
 
-
+	public Player(){};
+	public Player(String name, Date dateTimeOfSubmission,UUID id) {
+	    this.name = name;
+	    this.dateTimeOfSubmission = dateTimeOfSubmission;
+	    this.id = id.toString();
+	  }
 
 	@Column(name = "SUBMISSION_DATETIME")
 	private Date dateTimeOfSubmission;
@@ -26,8 +32,8 @@ public class Player {
 	@Transient
 	private PlayerStatus playerStatus;
 
-	@Id
 	@Column(name = "PLAYER_ID")
+	@Id
 	private String id;
 
 	public void setId(String id) {
